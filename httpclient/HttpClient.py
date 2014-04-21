@@ -101,6 +101,7 @@ class HeaderKeys:
     ACCEPT_LANGUAGE = 'en-US,en;q=0.8'
     ACCEPT_ENCODING = 'gzip,deflate,shch'
 
+
 class WsUrl:
     WS = 'ws/location/'
     IP = 'ip/'
