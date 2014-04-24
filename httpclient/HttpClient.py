@@ -87,22 +87,24 @@ class AfkClient:
 
 class Headers:
 
-    AUTH = 'x-mas'
+    AUTH = 'auth'
     CONTENT_TYPE = 'Content-type'
     ACCEPT = 'Accept'
     HOST = 'Host'
     ACCEPT_LANGUAGE = 'Accept-Language'
     ACCEPT_ENCODING = 'Accept-Encoding'
+    AGENT = 'User-Agent'
 
 class HeaderKeys:
-    AUTH = 'auth'
+    AUTH = 'test'
     CONTENT_TYPE = 'application/json'
     ACCEPT = 'application/json'
+    HOST = 'afknotes.appspot.com'
     ACCEPT_LANGUAGE = 'en-US,en;q=0.8'
     ACCEPT_ENCODING = 'gzip,deflate,shch'
 
-
 class WsUrl:
+    BASE = 'http://afknotes.appspot.com/'
     WS = 'ws/location/'
     IP = 'ip/'
     UPDATE = 'update/'
@@ -111,3 +113,34 @@ class WsUrl:
     ALL = 'all/'
     BASEdev = 'http://127.0.0.1:8888/'
     DEVparam = '?gwt.codesvr=127.0.0.1:9997'
+
+class BrowserVal:
+    AUTH = 'test'
+    CONTENT_TYPE = 'application/json'
+    ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    ACCEPT_LANGUAGE = 'en-US,en;q=0.8,ro;q=0.6'
+    ACCEPT_ENCODING = 'gzip,deflate,sdch'
+    HOST = 'whatismyipaddress.com'
+    AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
+
+class HttpClient:
+    def __init__(self):
+        self.headers = {}
+        self.headers[Headers.AGENT] = BrowserVal.AGENT
+        self.headers[Headers.ACCEPT] = BrowserVal.ACCEPT
+        self.headers[Headers.ACCEPT_ENCODING] = BrowserVal.ACCEPT_ENCODING
+        #self.headers[Headers.HOST] = BrowserVal.HOST
+        self.headers[Headers.ACCEPT_LANGUAGE] = BrowserVal.ACCEPT_LANGUAGE
+
+    def getUrlData(self,url):
+        from data_parser.ParserUtils import Utils
+        self.headers[Headers.HOST] = Utils.extractHost(url)#BrowserVal.HOST
+
+        req = urllib2.Request(url,None,self.headers)
+
+        resp = urllib2.urlopen(req)
+
+        from cStringIO import StringIO
+        from gzip import GzipFile
+        data2 = GzipFile('', 'r', 0, StringIO(resp.read())).read()
+        return data2

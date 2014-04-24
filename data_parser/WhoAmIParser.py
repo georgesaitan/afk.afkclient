@@ -1,16 +1,24 @@
 __author__ = 'gxg'
 import re
 from httpclient.LocationInfo import Location
+from httpclient.HttpClient import HttpClient
+from data_parser.ParserUtils import Utils
+
 
 class Whatismyipaddress:
 
-    def __init__(self):
+    def getTestData(self):
 
         self.page_data = None
         file = open('D:\proiecte\location\ip.txt','r')
         self.page_data = file.read().replace('\r','').replace('\n','')
         file.close()
 
+    def getWebPage(self):
+        #get page data
+        urlCient = HttpClient()
+        urlData = urlCient.getUrlData('http://whatismyipaddress.com/')
+        urlData = Utils.remLineDividers(urlData)
 
     def locationInfo(self):
 
