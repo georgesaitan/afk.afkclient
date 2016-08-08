@@ -1,7 +1,3 @@
-print r'mata e tigan'
-
-
-
 from httpclient.HttpClient import AfkClient
 from httpclient.LocationInfo import Location
 

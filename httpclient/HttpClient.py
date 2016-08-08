@@ -132,7 +132,7 @@ class HttpClient:
         #self.headers[Headers.HOST] = BrowserVal.HOST
         self.headers[Headers.ACCEPT_LANGUAGE] = BrowserVal.ACCEPT_LANGUAGE
 
-    def getUrlData(self,url):
+    def getUrlData(self, url):
         from data_parser.ParserUtils import Utils
         self.headers[Headers.HOST] = Utils.extractHost(url)#BrowserVal.HOST
 
